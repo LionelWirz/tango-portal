@@ -1,29 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Simple Calendar</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swiss Tango Event Calendar</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Leaflet.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
-    <div class="calendar">
-        <div class="month">
-            <h1>November 2023</h1>
-        </div>
-        <div class="weekdays">
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>FDrullo ri</div>
-            <div>Sat</div>
-        </div>
-        <div class="days">
-            <!-- Repeat this div for each day, adjusting the number accordingly -->
-            <div class="day">1</div>
-            <div class="day">2</div>
-            <!-- ... -->
-        </div>
-    </div>
+    <header>
+        <h1>Swiss Tango Event Calendar</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <aside>
+        <input type="date" id="date-picker">
+    </aside>
+
+    <main>
+        <div id="map"></div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
