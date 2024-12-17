@@ -1,15 +1,9 @@
-// Initialize the map with Switzerland locked
-var map = L.map('map', {
-    center: [46.8182, 8.2275],
-    zoom: 7,
-    maxZoom: 12,
-    minZoom: 6,
-    maxBounds: [
-        [45.3982, 5.1402], // Southwest corner
-        [48.2301, 10.4921] // Northeast corner
-    ],
-    maxBoundsViscosity: 1.0
-});
+// Initialize the map
+var map = L.map('map').setView([46.8182, 8.2275], 7); // Switzerland center
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
 
 // Add OpenStreetMap tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
