@@ -1,47 +1,88 @@
-// Initialize the map with Leaflet
-var map = L.map('map').setView([46.8182, 8.2275], 7); // Switzerland's center coordinates
-
-// Add OpenStreetMap tile layer
+// Initialize the map
+var map = L.map('map').setView([46.8182, 8.2275], 7); // Switzerland center
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Example Markers for Events
-var events = [
+// Load events from localStorage or use default
+var events = JSON.parse(localStorage.getItem('tangoEvents')) || [
     { name: "Zurich Tango Night", coords: [47.3769, 8.5417], date: "2024-06-20" },
-    { name: "Geneva Tango Festival", coords: [46.2044, 6.1432], date: "2024-07-05" },
-    { name: "Bern Tango Workshop", coords: [46.9481, 7.4474], date: "2024-06-25" }
+    { name: "Geneva Tango Festival", coords: [46.2044, 6.1432], date: "2024-07-05" }
 ];
 
-// Add markers to the map
-events.forEach(event => {
-    L.marker(event.coords)
-        .addTo(map)
-        .bindPopup(`<b>${event.name}</b><br>Date: ${event.date}`)
-        .openPopup();
-});
-
-// Filter Events Based on Date Picker
-document.getElementById('date-picker').addEventListener('change', function () {
-    const selectedDate = this.value;
-
-    // Clear the map
+// Function to display events on the map
+function displayEvents() {
     map.eachLayer(layer => {
         if (layer instanceof L.Marker) {
             map.removeLayer(layer);
         }
     });
 
-    // Re-add markers matching the selected date
-    events.filter(event => event.date === selectedDate).forEach(event => {
+    events.forEach(event => {
         L.marker(event.coords)
             .addTo(map)
             .bindPopup(`<b>${event.name}</b><br>Date: ${event.date}`)
             .openPopup();
     });
+}
 
-    if (!events.some(event => event.date === selectedDate)) {
+// Initial display of events
+displayEvents();
+
+// Event Form Submission
+document.getElementById('event-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Get form values
+    const name = document.getElementById('event-name').value;
+    const date = document.getElementById('event-date').value;
+    const coordsInput = document.getElementById('event-coords').value;
+
+    // Validate and parse coordinates
+    const coords = coordsInput.split(',').map(Number);
+    if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
+        alert("Please enter valid coordinates (e.g., 46.2044, 6.1432).");
+        return;
+    }
+
+    // Add new event
+    const newEvent = { name, coords, date };
+    events.push(newEvent);
+
+    // Save to localStorage
+    localStorage.setItem('tangoEvents', JSON.stringify(events));
+
+    // Update the map
+    displayEvents();
+
+    // Clear the form
+    this.reset();
+    alert("Event added successfully!");
+});
+
+// Date Picker Filter
+document.getElementById('date-picker').addEventListener('change', function () {
+    const selectedDate = this.value;
+
+    // Filter events
+    const filteredEvents = events.filter(event => event.date === selectedDate);
+
+    // Update map with filtered events
+    map.eachLayer(layer => {
+        if (layer instanceof L.Marker) {
+            map.removeLayer(layer);
+        }
+    });
+
+    if (filteredEvents.length === 0) {
         alert("No events found for the selected date.");
     }
+
+    filteredEvents.forEach(event => {
+        L.marker(event.coords)
+            .addTo(map)
+            .bindPopup(`<b>${event.name}</b><br>Date: ${event.date}`)
+            .openPopup();
+    });
 });
