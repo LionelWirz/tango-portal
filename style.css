@@ -1,41 +1,62 @@
-body {
-    font-family: Arial, sans-serif;
+/* General Reset */
+body, html {
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    color: #333;
+    font-family: Arial, sans-serif;
 }
 
+/* Header Styling */
 header {
-    background-color: black;
+    background-color: #333;
     color: white;
-    padding: 1em 2em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 1rem;
+    text-align: center;
 }
 
 nav ul {
     list-style: none;
-    display: flex;
-    gap: 1em;
+    padding: 0;
 }
 
-nav ul li a {
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav a {
     color: white;
     text-decoration: none;
+    font-weight: bold;
 }
 
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Date Picker */
 aside {
-    background-color: #f2f2f2;
-    padding: 1em;
+    text-align: center;
+    margin: 1rem 0;
 }
 
-main {
-    flex-grow: 1;
+label {
+    font-weight: bold;
+    margin-right: 5px;
 }
 
+/* Map Styling */
 #map {
+    width: 90%;
     height: 500px;
+    margin: auto;
+    border: 1px solid #ccc;
 }
+
+/* Main Section */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+

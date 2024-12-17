@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swiss Tango Event Calendar</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Find all Swiss Tango events on an interactive map. Stay updated with the latest events near you.">
+    <meta name="keywords" content="Swiss Tango, Tango Events, Dance Calendar, Switzerland">
+    <meta name="author" content="Your Name">
+
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Leaflet.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>Swiss Tango Event Calendar</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Date Picker -->
+    <aside>
+        <label for="date-picker">Choose a Date:</label>
+        <input type="date" id="date-picker">
+    </aside>
+
+    <!-- Map Section -->
+    <main>
+        <div id="map"></div>
+    </main>
+
+    <!-- Fallback for No JavaScript -->
+    <noscript>
+        <p>JavaScript is required to display the map. Please enable it in your browser settings.</p>
+    </noscript>
+
+    <!-- Leaflet.js Library -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+</body>
+</html>
