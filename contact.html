@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Swiss Tango Event Calendar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="index.html">TANGO-PORTAL</a></h1>
+        <div class="date-picker-header">
+            <input type="date" id="date-picker">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="addEvent.html">Add Event</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="contact-section">
+            <h2>Contact Us</h2>
+            <p>Welcome to the Swiss Tango Event Calendar. Here you can find all the Tango events happening in Switzerland.</p>
+            <p>If you have questions, suggestions, or would like to report an issue, please reach out to us using the information below:</p>
+            <ul>
+                <li><strong>Email:</strong> <a href="mailto:info@tango-portal.ch">info@tango-portal.ch</a></li>
+                <li><strong>Phone:</strong> +41 76 123 4567</li>
+                <li><strong>Address:</strong> Bahnhofstrasse 10, Zurich, Switzerland</li>
+            </ul>
+            <p>We appreciate your feedback and look forward to hearing from you!</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Swiss Tango Event Calendar. All Rights Reserved.</p>
+    </footer>
+    <script>
+        document.getElementById('date-picker').value = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>

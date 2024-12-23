@@ -18,13 +18,15 @@ body {
 header {
     background-color: #1a1a1a;
     color: #dcdcdc;
-    padding: 1rem;
-    display: flex;
-    justify-content: center; /* Center both elements */
-    align-items: center; /* Vertically center elements */
-    gap: 20px; /* Add spacing between the title and the date picker */
+    padding: 1rem; /* Adjust padding for alignment */
+    width: 100%; /* Full width of the screen */
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Vertically align items */
+    gap: 20px; /* Add spacing between the title, date picker, and buttons */
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 50px rgba(255, 255, 255, 0.1);
     z-index: 10;
+    position: relative;
 }
 
 header h1 {
@@ -37,6 +39,10 @@ header h1 a {
     color: inherit;
 }
 
+.date-picker-header {
+    display: inline-block;
+}
+
 .date-picker-header input {
     font-size: 1.5rem;
     background-color: #444;
@@ -45,16 +51,24 @@ header h1 a {
     padding: 0.5rem;
 }
 
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px; /* Space between navigation items */
+}
+
+
 /* Footer Styling */
 footer {
     background-color: #1a1a1a;
     color: #dcdcdc;
-    padding: 1rem;
+    padding: 1rem 0;
+    width: 100%; /* Full width of the screen */
     text-align: center;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 50px rgba(255, 255, 255, 0.1);
     z-index: 10;
     position: relative;
-    margin-top: auto;
 }
 
 footer p {
@@ -68,23 +82,29 @@ main {
     flex-direction: column;
     text-align: center;
     padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* Spacing under the header */
 #event-list-section {
-    margin-top: 40px; /* Add spacing under the header for light spill effect */
+    margin-top: 40px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Navigation */
 nav ul {
     list-style: none;
     padding: 0;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
 nav ul li {
     display: inline;
-    margin: 0 10px;
 }
 
 nav a {
@@ -108,15 +128,17 @@ nav a:hover {
     text-align: left;
 }
 
-button {
+#event-list-section button {
+    font-size: 1.5rem;
+    color: #dcdcdc;
     background: none;
     border: none;
-    color: blue;
-    text-decoration: underline;
+    text-decoration: none;
     cursor: pointer;
+    font-weight: bold;
 }
 
-button:hover {
+#event-list-section button:hover {
     color: white;
 }
 
@@ -145,4 +167,3 @@ button:hover {
 h2 {
     color: #dcdcdc;
 }
-
