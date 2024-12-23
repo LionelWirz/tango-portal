@@ -39,22 +39,40 @@
     <main>
         <div id="map"></div>
 
-    <!-- Event Submission Form -->
-    <section id="event-form-section">
-        <h2>Add a Tango Event</h2>
-        <form id="event-form">
-            <label for="event-name">Event Name:</label>
-            <input type="text" id="event-name" placeholder="Enter event name" required>
+        <!-- Event List Section -->
+        <section id="event-list-section">
+            <h2>Event List</h2>
+            <ul id="event-list">
+                <!-- Example Event -->
+                <li>
+                    <strong>Time:</strong> 18:00 - 23:00<br>
+                    <strong>Name:</strong> Milonga de los Amigos<br>
+                    <strong>Address:</strong> Bahnhofstrasse 10, Zurich<br>
+                    <strong>Start:</strong> 18:00<br>
+                    <strong>Finish:</strong> 23:00<br>
+                    <strong>Price:</strong> CHF 20<br>
+                    <strong>DJ:</strong> DJ TangoLover
+                </li>
+                <!-- Additional events will be dynamically added here -->
+            </ul>
+        </section>
 
-            <label for="event-date">Event Date:</label>
-            <input type="date" id="event-date" required>
+        <!-- Event Submission Form -->
+        <section id="event-form-section">
+            <h2>Add a Tango Event</h2>
+            <form id="event-form">
+                <label for="event-name">Event Name:</label>
+                <input type="text" id="event-name" placeholder="Enter event name" required>
 
-            <label for="event-coords">Location Coordinates:</label>
-            <input type="text" id="event-coords" placeholder="e.g., 46.2044, 6.1432" required>
+                <label for="event-date">Event Date:</label>
+                <input type="date" id="event-date" required>
 
-            <button type="submit">Add Event</button>
-        </form>
-    </section>
+                <label for="event-coords">Location Coordinates:</label>
+                <input type="text" id="event-coords" placeholder="e.g., 46.2044, 6.1432" required>
+
+                <button type="submit">Add Event</button>
+            </form>
+        </section>
     </main>
 
     <!-- Fallback for No JavaScript -->
