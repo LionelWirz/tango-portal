@@ -19,8 +19,7 @@
         <div style="display: flex; align-items: center; justify-content: center;">
             <h1 style="margin: 0; font-size: 2em;">TANGO-PORTAL</h1>
             <div class="date-picker-header" style="margin-left: 20px;">
-                <label for="date-picker" style="font-size: 1.5em;">Choose a Date:</label>
-                <input type="date" id="date-picker" style="font-size: 1.5em; margin-left: 10px;">
+                <input type="date" id="date-picker" style="font-size: 1.5em; margin-left: 10px;" value="<script>document.write(new Date().toISOString().split('T')[0]);</script>">
             </div>
         </div>
         <nav style="margin-top: 10px; text-align: center;">
@@ -71,6 +70,8 @@
     </noscript>
 
     <!-- Custom Script -->
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('date-picker').value = new Date().toISOString().split('T')[0];
+    </script>
 </body>
 </html>
