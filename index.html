@@ -4,62 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swiss Tango Event Calendar</title>
-    
-    <!-- Meta Tags for SEO -->
-    <meta name="description" content="Find all Swiss Tango events on an interactive map. Stay updated with the latest events near you.">
-    <meta name="keywords" content="Swiss Tango, Tango Events, Dance Calendar, Switzerland">
-    <meta name="author" content="Your Name">
-
-    <!-- CSS Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header Section -->
     <header>
-        <div style="display: flex; align-items: center; justify-content: center;">
-            <h1 style="margin: 0; font-size: 2em;"><a href="index.html" style="text-decoration: none; color: inherit;">TANGO-PORTAL</a></h1>
-            <div class="date-picker-header" style="margin-left: 20px;">
-                <input type="date" id="date-picker" style="font-size: 1.5em; margin-left: 10px;" value="<script>document.write(new Date().toISOString().split('T')[0]);</script>">
-            </div>
+        <h1><a href="index.html">TANGO-PORTAL</a></h1>
+        <div class="date-picker-header">
+            <input type="date" id="date-picker">
         </div>
-        <nav style="margin-top: 10px; text-align: center;">
-            <ul style="list-style: none; padding: 0; display: inline-block;">
-                <li style="display: inline; margin-right: 10px;"><a href="addEvent.html" style="font-size: 0.8em;">Add Event</a></li>
-                <li style="display: inline;"><a href="#" style="font-size: 0.8em;">Contact</a></li>
+        <nav>
+            <ul>
+                <li><a href="addEvent.html">Add Event</a></li>
+                <li><a href="#">Contact</a></li>
             </ul>
         </nav>
     </header>
-
-    <!-- Event List Section -->
     <main>
         <section id="event-list-section">
             <h2>Event List</h2>
             <ul id="event-list">
-                <!-- Example Event -->
                 <li>
-                    <div><button onclick="window.open('eventDetails.html', '_blank')" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer;"><strong>Milonga de los Amigos</strong></button></div>
                     <div>
-                        <strong>Time:</strong> 18:00 - 23:00, <strong>Address:</strong> Bahnhofstrasse 10, Zurich, <strong>Price:</strong> CHF 20, <strong>DJ:</strong> DJ TangoLover
+                        <button onclick="window.open('eventDetails.html', '_blank')">
+                            <strong>Milonga de los Amigos</strong>
+                        </button>
+                    </div>
+                    <div>
+                        <strong>Time:</strong> 18:00 - 23:00, <strong>Address:</strong> Bahnhofstrasse 10, Zurich,
+                        <strong>Price:</strong> CHF 20, <strong>DJ:</strong> DJ TangoLover
                     </div>
                 </li>
-                <!-- Additional events will be dynamically added here -->
             </ul>
         </section>
     </main>
-
-    <!-- Fallback for No JavaScript -->
-    <noscript>
-        <p>JavaScript is required to display the map. Please enable it in your browser settings.</p>
-    </noscript>
-
-    <!-- Custom Script -->
+    <footer>
+        <p>&copy; 2024 Swiss Tango Event Calendar. All Rights Reserved.</p>
+    </footer>
     <script>
         document.getElementById('date-picker').value = new Date().toISOString().split('T')[0];
     </script>
-    <!-- Footer Section -->
-    <footer style="background-color: grey; padding: 10px; text-align: center; position: fixed; bottom: 0; width: 100%;">
-        <p style="margin: 0; color: white;">&copy; 2024 Swiss Tango Event Calendar. All Rights Reserved.</p>
-    </footer>
 </body>
 </html>
+
 

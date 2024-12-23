@@ -20,9 +20,18 @@ header {
     color: #dcdcdc;
     padding: 1rem;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 50px rgba(255, 255, 255, 0.1);
     z-index: 10;
     position: relative;
+}
+
+header a {
+    color: #dcdcdc;
+    text-decoration: none;
+}
+
+header a:hover {
+    text-decoration: underline;
 }
 
 /* Footer Styling */
@@ -31,25 +40,32 @@ footer {
     color: #dcdcdc;
     padding: 1rem;
     text-align: center;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 50px rgba(255, 255, 255, 0.1);
     z-index: 10;
     position: relative;
+    margin-top: auto;
 }
 
-/* Date Picker */
-.date-picker-header input {
-    font-size: 1.5rem;
-    margin-left: 10px;
-    background-color: #444;
-    color: #dcdcdc;
-    border: none;
-    padding: 0.5rem;
+footer p {
+    margin: 0;
+}
+
+/* Centered Main Content */
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
 }
 
 /* Navigation */
 nav ul {
     list-style: none;
     padding: 0;
+    display: inline-block;
 }
 
 nav ul li {
@@ -67,18 +83,7 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* Centered Main Content */
-main {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    padding: 20px;
-}
-
-/* Event List Styling */
+/* Event List */
 #event-list-section ul {
     list-style: none;
     padding: 0;
@@ -87,6 +92,18 @@ main {
 #event-list li {
     margin: 1rem 0;
     text-align: left;
+}
+
+button {
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+button:hover {
+    color: white;
 }
 
 /* Form Styling */
@@ -113,19 +130,6 @@ main {
 /* Titles */
 h2 {
     color: #dcdcdc;
-}
-
-/* Buttons */
-button {
-    background: none;
-    border: none;
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-button:hover {
-    color: white;
 }
 
 
