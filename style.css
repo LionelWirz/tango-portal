@@ -27,7 +27,6 @@ header {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.15), 0 0 50px rgba(255, 255, 255, 0.05);
     z-index: 10;
     position: relative;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 header h1 {
