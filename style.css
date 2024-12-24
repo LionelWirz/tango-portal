@@ -18,7 +18,7 @@ body {
 header {
     background-color: #0d0d0d;
     color: #dcdcdc;
-    padding: 1rem;
+    padding: 0.5rem 1rem; /* Reduce padding for better alignment */
     width: 100%;
     display: flex;
     justify-content: center;
@@ -27,14 +27,13 @@ header {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.15), 0 0 50px rgba(255, 255, 255, 0.05);
     z-index: 10;
     position: relative;
+    flex-wrap: nowrap; /* Ensure no wrapping */
 }
 
-
 header h1 {
-    margin: 0;
+    margin: 0; /* Remove default margin */
     font-size: 2em;
-    text-align: center;
-    flex: 1; /* Take available space on small screens */
+    line-height: 1; /* Reduce line-height to minimize vertical space */
 }
 
 header h1 a {
@@ -44,15 +43,17 @@ header h1 a {
 
 .date-picker-header {
     display: inline-block;
+    margin: 0; /* Ensure no margin around the date picker */
 }
 
 .date-picker-header input {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     background-color: #333;
     color: #dcdcdc;
     border: none;
     padding: 0.5rem;
 }
+
 
 nav ul {
     list-style: none;
