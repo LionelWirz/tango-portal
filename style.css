@@ -2,12 +2,12 @@
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif; /* Use Roboto for a modern look */
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Page Background */
 body {
-    background-color: #181818; /* Darker background */
+    background-color: #181818;
     color: #dcdcdc;
     display: flex;
     flex-direction: column;
@@ -16,22 +16,25 @@ body {
 
 /* Header Styling */
 header {
-    background-color: #0d0d0d; /* Darker header */
+    background-color: #0d0d0d;
     color: #dcdcdc;
-    padding: 1rem; /* Adjust padding for alignment */
-    width: 100%; /* Full width of the screen */
-    display: flex; /* Use flexbox for layout */
-    justify-content: center; /* Center the content horizontally */
-    align-items: center; /* Vertically align items */
-    gap: 20px; /* Add spacing between the title, date picker, and buttons */
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.15), 0 0 50px rgba(255, 255, 255, 0.05); /* Softer shadow */
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.15), 0 0 50px rgba(255, 255, 255, 0.05);
     z-index: 10;
     position: relative;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 header h1 {
     margin: 0;
     font-size: 2em;
+    text-align: center;
+    flex: 1; /* Take available space on small screens */
 }
 
 header h1 a {
@@ -44,8 +47,8 @@ header h1 a {
 }
 
 .date-picker-header input {
-    font-size: 1.5rem;
-    background-color: #333; /* Darker input background */
+    font-size: 1.2rem;
+    background-color: #333;
     color: #dcdcdc;
     border: none;
     padding: 0.5rem;
@@ -55,51 +58,9 @@ nav ul {
     list-style: none;
     padding: 0;
     display: flex;
-    gap: 15px; /* Space between navigation items */
-}
-
-/* Footer Styling */
-footer {
-    background-color: #0d0d0d; /* Darker footer */
-    color: #dcdcdc;
-    padding: 1rem 0;
-    width: 100%; /* Full width of the screen */
-    text-align: center;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.15), 0 0 50px rgba(255, 255, 255, 0.05); /* Softer shadow */
-    z-index: 10;
-    position: relative;
-}
-
-footer p {
-    margin: 0;
-}
-
-/* Centered Main Content */
-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Spacing under the header */
-#event-list-section {
-    margin-top: 40px;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Navigation */
-nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 10px;
+    flex-wrap: wrap; /* Wrap navigation links */
 }
 
 nav ul li {
@@ -116,6 +77,44 @@ nav a:hover {
     text-decoration: underline;
 }
 
+/* Footer Styling */
+footer {
+    background-color: #0d0d0d;
+    color: #dcdcdc;
+    padding: 1rem 0;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.15), 0 0 50px rgba(255, 255, 255, 0.05);
+    z-index: 10;
+    position: relative;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Spacing under the header */
+#event-list-section {
+    margin-top: 40px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 10px;
+}
+
 /* Event List */
 #event-list-section ul {
     list-style: none;
@@ -128,13 +127,13 @@ nav a:hover {
 }
 
 #event-list-section button {
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* Adjust font size for smaller screens */
     color: #dcdcdc;
     background: none;
     border: none;
     text-decoration: none;
     cursor: pointer;
-    font-weight: normal; /* Removed bold */
+    font-weight: normal;
 }
 
 #event-list-section button:hover {
@@ -144,13 +143,14 @@ nav a:hover {
 /* Form Styling */
 #event-form-section input,
 #event-form-section button {
-    background-color: #333; /* Darker input and button background */
+    background-color: #333;
     color: #dcdcdc;
     border: none;
     padding: 0.5rem;
     width: 100%;
-    max-width: 400px;
+    max-width: 100%; /* Ensure responsiveness */
     margin: 0.5rem 0;
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
 #event-form-section button:hover {
@@ -158,12 +158,69 @@ nav a:hover {
 }
 
 #event-form {
-    max-width: 400px;
+    max-width: 100%; /* Responsive width */
     margin: auto;
 }
 
 /* Titles */
 h2 {
     color: #dcdcdc;
+    font-size: 1.5rem; /* Adjust size for smaller screens */
+}
+
+/* Responsive Design - Media Queries */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column; /* Stack header elements */
+        gap: 10px;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .date-picker-header input {
+        font-size: 1rem;
+    }
+
+    nav ul {
+        gap: 8px;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    #event-list-section button {
+        font-size: 1rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .date-picker-header input {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+    }
+
+    nav ul {
+        flex-direction: column; /* Stack navigation links */
+        gap: 5px;
+    }
+
+    #event-list-section button {
+        font-size: 0.9rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
 }
 
