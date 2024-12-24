@@ -224,4 +224,48 @@ h2 {
         font-size: 1rem;
     }
 }
+#calendar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin: 20px;
+}
+
+.calendar-entry {
+    background-color: #333;
+    color: #dcdcdc;
+    padding: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.calendar-entry:hover {
+    background-color: #444;
+}
+
+#details {
+    margin: 20px;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 5px;
+    color: #dcdcdc;
+}
+
+#details button {
+    margin-top: 20px;
+    background-color: #444;
+    color: #dcdcdc;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#details button:hover {
+    background-color: #555;
+}
 
