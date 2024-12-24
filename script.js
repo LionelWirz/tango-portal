@@ -1,141 +1,74 @@
 // Initialize the map
-var map = L.map('map').setView([46.8182, 8.2275], 7); // Switzerland center
+const map = L.map('map').setView([46.8182, 8.2275], 7); // Switzerland center
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Add OpenStreetMap tile layer
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 12,
-    attribution: '© OpenStreetMap contributors'
-}).addTo(map);
-
-
-// Add OpenStreetMap tile layer
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 12,
-    attribution: '© OpenStreetMap contributors'
-}).addTo(map);
-
-
-// Load events from localStorage or use default
-var events = JSON.parse(localStorage.getItem('tangoEvents')) || [
-    { name: "Zurich Tango Night", coords: [47.3769, 8.5417], date: "2024-06-20" },
-    { name: "Geneva Tango Festival", coords: [46.2044, 6.1432], date: "2024-07-05" }
+// Events from localStorage or default
+let localEvents = JSON.parse(localStorage.getItem('tangoEvents')) || [
+    { id: 1, name: "Zurich Tango Night", coords: [47.3769, 8.5417], date: "2024-06-20" },
+    { id: 2, name: "Geneva Tango Festival", coords: [46.2044, 6.1432], date: "2024-07-05" }
 ];
 
-// Function to display events on the map
-function displayEvents() {
-    map.eachLayer(layer => {
-        if (layer instanceof L.Marker) {
-            map.removeLayer(layer);
-        }
-    });
-
-    events.forEach(event => {
-        L.marker(event.coords)
-            .addTo(map)
-            .bindPopup(`<b>${event.name}</b><br>Date: ${event.date}`)
-            .openPopup();
-    });
-}
-
-// Initial display of events
-displayEvents();
-
-// Event Form Submission
-document.getElementById('event-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    // Get form values
-    const name = document.getElementById('event-name').value;
-    const date = document.getElementById('event-date').value;
-    const coordsInput = document.getElementById('event-coords').value;
-
-    // Validate and parse coordinates
-    const coords = coordsInput.split(',').map(Number);
-    if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
-        alert("Please enter valid coordinates (e.g., 46.2044, 6.1432).");
-        return;
-    }
-
-    // Add new event
-    const newEvent = { name, coords, date };
-    events.push(newEvent);
-
-    // Save to localStorage
-    localStorage.setItem('tangoEvents', JSON.stringify(events));
-
-    // Update the map
-    displayEvents();
-
-    // Clear the form
-    this.reset();
-    alert("Event added successfully!");
-});
-
-// Date Picker Filter
-document.getElementById('date-picker').addEventListener('change', function () {
-    const selectedDate = this.value;
-
-    // Filter events
-    const filteredEvents = events.filter(event => event.date === selectedDate);
-
-    // Update map with filtered events
-    map.eachLayer(layer => {
-        if (layer instanceof L.Marker) {
-            map.removeLayer(layer);
-        }
-    });
-
-    if (filteredEvents.length === 0) {
-        alert("No events found for the selected date.");
-    }
-
-    filteredEvents.forEach(event => {
-        L.marker(event.coords)
-            .addTo(map)
-            .bindPopup(`<b>${event.name}</b><br>Date: ${event.date}`)
-            .openPopup();
-    });
-});
-
+// Google Sheets API URL
 const API_URL = 'https://script.google.com/macros/s/AKfycbz0sPTZIu2_1O0SRd5kCZja0u64TbIhyygmTTNtoF371wq-3vf9iCFIlSKJxrr6aZU/exec';
+let apiEvents = []; // To store fetched events
 
+// Fetch events from Google Sheets
 async function fetchEvents() {
     try {
         const response = await fetch(API_URL);
-        const events = await response.json();
-        console.log(events); // Log the events for debugging
-        renderCalendar(events);
+        const fetchedEvents = await response.json();
+        apiEvents = fetchedEvents.map(event => ({
+            id: event.id,
+            name: event.title,
+            coords: event.coords.split(',').map(Number), // Assuming coords are comma-separated
+            date: event.date
+        }));
+        updateCalendarAndMap();
     } catch (error) {
         console.error('Error fetching events:', error);
     }
 }
 
+// Render events on the map
+function displayEvents(events) {
+    map.eachLayer(layer => {
+        if (layer instanceof L.Marker) map.removeLayer(layer);
+    });
+
+    events.forEach(event => {
+        L.marker(event.coords)
+            .addTo(map)
+            .bindPopup(`<b>${event.name}</b><br>Date: ${event.date}`)
+            .openPopup();
+    });
+}
+
+// Render events in the calendar
 function renderCalendar(events) {
     const calendarContainer = document.getElementById('calendar');
-    calendarContainer.innerHTML = ''; // Clear any existing entries
+    calendarContainer.innerHTML = ''; // Clear existing entries
 
     events.forEach(event => {
         const entryElement = document.createElement('div');
         entryElement.classList.add('calendar-entry');
         entryElement.innerHTML = `
-            <span>${event.date}:</span> <strong>${event.title}</strong>
+            <span>${event.date}:</span> <strong>${event.name}</strong>
         `;
         entryElement.onclick = () => showEventDetails(event); // Pass event data
         calendarContainer.appendChild(entryElement);
     });
 }
 
+// Show event details
 function showEventDetails(event) {
     const detailsContainer = document.getElementById('details');
     detailsContainer.innerHTML = `
-        <h2>${event.title}</h2>
+        <h2>${event.name}</h2>
         <p><strong>Date:</strong> ${event.date}</p>
-        <p><strong>Description:</strong> ${event.description}</p>
-        <p><strong>Location:</strong> ${event.location}</p>
+        <p><strong>Location:</strong> ${event.coords.join(', ')}</p>
         <button onclick="goBack()">Back</button>
     `;
     document.getElementById('calendar').style.display = 'none';
@@ -147,5 +80,47 @@ function goBack() {
     document.getElementById('calendar').style.display = 'block';
 }
 
-fetchEvents(); // Fetch and render events on page load
+// Update the calendar and map
+function updateCalendarAndMap() {
+    const combinedEvents = [...localEvents, ...apiEvents];
+    renderCalendar(combinedEvents);
+    displayEvents(combinedEvents);
+}
+
+// Event Form Submission
+document.getElementById('event-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById('event-name').value;
+    const date = document.getElementById('event-date').value;
+    const coordsInput = document.getElementById('event-coords').value;
+
+    const coords = coordsInput.split(',').map(Number);
+    if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
+        alert("Please enter valid coordinates (e.g., 46.2044, 6.1432).");
+        return;
+    }
+
+    const newEvent = { id: Date.now(), name, coords, date };
+    localEvents.push(newEvent);
+    localStorage.setItem('tangoEvents', JSON.stringify(localEvents));
+    updateCalendarAndMap();
+    this.reset();
+    alert("Event added successfully!");
+});
+
+// Filter events by date
+document.getElementById('date-picker').addEventListener('change', function () {
+    const selectedDate = this.value;
+    const filteredEvents = [...localEvents, ...apiEvents].filter(event => event.date === selectedDate);
+
+    if (filteredEvents.length === 0) alert("No events found for the selected date.");
+    renderCalendar(filteredEvents);
+    displayEvents(filteredEvents);
+});
+
+// Initial render
+fetchEvents();
+updateCalendarAndMap();
+
 
