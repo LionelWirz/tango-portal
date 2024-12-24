@@ -23,11 +23,12 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px; /* Reduced spacing between elements */
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.15), 0 0 50px rgba(255, 255, 255, 0.05);
     z-index: 10;
     position: relative;
 }
+
 
 header h1 {
     margin: 0;
