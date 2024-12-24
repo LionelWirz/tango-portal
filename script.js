@@ -19,16 +19,28 @@ let apiEvents = []; // To store fetched events
 async function fetchEvents() {
     try {
         const response = await fetch(API_URL);
+
+        if (!response.ok) {
+            throw new Error(`API request failed with status ${response.status}`);
+        }
+
         const fetchedEvents = await response.json();
+        console.log("Fetched Events from API:", fetchedEvents); // Debugging log
+
         apiEvents = fetchedEvents.map(event => ({
             id: event.id,
             name: event.title,
             coords: event.coords.split(',').map(Number), // Assuming coords are comma-separated
             date: event.date
         }));
+
         updateCalendarAndMap();
     } catch (error) {
         console.error('Error fetching events:', error);
+
+        // Display error message in the calendar section
+        const calendarContainer = document.getElementById('calendar');
+        calendarContainer.innerHTML = `<p style="color: red;">Failed to load events. Please try again later.</p>`;
     }
 }
 
@@ -41,8 +53,7 @@ function displayEvents(events) {
     events.forEach(event => {
         L.marker(event.coords)
             .addTo(map)
-            .bindPopup(`<b>${event.name}</b><br>Date: ${event.date}`)
-            .openPopup();
+            .bindPopup(`<b>${event.name}</b><br>Date: ${event.date}`);
     });
 }
 
@@ -50,6 +61,11 @@ function displayEvents(events) {
 function renderCalendar(events) {
     const calendarContainer = document.getElementById('calendar');
     calendarContainer.innerHTML = ''; // Clear existing entries
+
+    if (events.length === 0) {
+        calendarContainer.innerHTML = `<p>No events available.</p>`;
+        return;
+    }
 
     events.forEach(event => {
         const entryElement = document.createElement('div');
@@ -83,6 +99,7 @@ function goBack() {
 // Update the calendar and map
 function updateCalendarAndMap() {
     const combinedEvents = [...localEvents, ...apiEvents];
+    console.log("Combined Events:", combinedEvents); // Debugging log
     renderCalendar(combinedEvents);
     displayEvents(combinedEvents);
 }
@@ -114,7 +131,10 @@ document.getElementById('date-picker').addEventListener('change', function () {
     const selectedDate = this.value;
     const filteredEvents = [...localEvents, ...apiEvents].filter(event => event.date === selectedDate);
 
-    if (filteredEvents.length === 0) alert("No events found for the selected date.");
+    if (filteredEvents.length === 0) {
+        alert("No events found for the selected date.");
+    }
+
     renderCalendar(filteredEvents);
     displayEvents(filteredEvents);
 });
