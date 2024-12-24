@@ -100,3 +100,52 @@ document.getElementById('date-picker').addEventListener('change', function () {
             .openPopup();
     });
 });
+
+const API_URL = 'https://script.google.com/macros/s/AKfycbz0sPTZIu2_1O0SRd5kCZja0u64TbIhyygmTTNtoF371wq-3vf9iCFIlSKJxrr6aZU/exec';
+
+async function fetchEvents() {
+    try {
+        const response = await fetch(API_URL);
+        const events = await response.json();
+        console.log(events); // Log the events for debugging
+        renderCalendar(events);
+    } catch (error) {
+        console.error('Error fetching events:', error);
+    }
+}
+
+function renderCalendar(events) {
+    const calendarContainer = document.getElementById('calendar');
+    calendarContainer.innerHTML = ''; // Clear any existing entries
+
+    events.forEach(event => {
+        const entryElement = document.createElement('div');
+        entryElement.classList.add('calendar-entry');
+        entryElement.innerHTML = `
+            <span>${event.date}:</span> <strong>${event.title}</strong>
+        `;
+        entryElement.onclick = () => showEventDetails(event); // Pass event data
+        calendarContainer.appendChild(entryElement);
+    });
+}
+
+function showEventDetails(event) {
+    const detailsContainer = document.getElementById('details');
+    detailsContainer.innerHTML = `
+        <h2>${event.title}</h2>
+        <p><strong>Date:</strong> ${event.date}</p>
+        <p><strong>Description:</strong> ${event.description}</p>
+        <p><strong>Location:</strong> ${event.location}</p>
+        <button onclick="goBack()">Back</button>
+    `;
+    document.getElementById('calendar').style.display = 'none';
+    detailsContainer.style.display = 'block';
+}
+
+function goBack() {
+    document.getElementById('details').style.display = 'none';
+    document.getElementById('calendar').style.display = 'block';
+}
+
+fetchEvents(); // Fetch and render events on page load
+
