@@ -11,38 +11,7 @@ let localEvents = JSON.parse(localStorage.getItem('tangoEvents')) || [
     { id: 2, name: "Geneva Tango Festival", coords: [46.2044, 6.1432], date: "2024-07-05" }
 ];
 
-// Google Sheets API URL
-const API_URL = 'https://script.google.com/macros/s/AKfycbz0sPTZIu2_1O0SRd5kCZja0u64TbIhyygmTTNtoF371wq-3vf9iCFIlSKJxrr6aZU/exec';
-let apiEvents = []; // To store fetched events
 
-// Fetch events from Google Sheets
-async function fetchEvents() {
-    try {
-        const response = await fetch(API_URL);
-
-        if (!response.ok) {
-            throw new Error(`API request failed with status ${response.status}`);
-        }
-
-        const fetchedEvents = await response.json();
-        console.log("Fetched Events from API:", fetchedEvents); // Debugging log
-
-        apiEvents = fetchedEvents.map(event => ({
-            id: event.id,
-            name: event.title,
-            coords: event.coords.split(',').map(Number), // Assuming coords are comma-separated
-            date: event.date
-        }));
-
-        updateCalendarAndMap();
-    } catch (error) {
-        console.error('Error fetching events:', error);
-
-        // Display error message in the calendar section
-        const calendarContainer = document.getElementById('calendar');
-        calendarContainer.innerHTML = `<p style="color: red;">Failed to load events. Please try again later.</p>`;
-    }
-}
 
 // Render events on the map
 function displayEvents(events) {
