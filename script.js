@@ -11,6 +11,48 @@ let localEvents = JSON.parse(localStorage.getItem('tangoEvents')) || [
     { id: 2, name: "Geneva Tango Festival", coords: [46.2044, 6.1432], date: "2024-07-05" }
 ];
 
+async function fetchEvents() {
+    try {
+        const records = await pb.collection('events').getFullList(); // Fetch all events
+        const events = records.map(record => ({
+            id: record.id,
+            name: record.name,
+            coords: record.coords.split(',').map(Number),
+            date: record.date,
+            description: record.description
+        }));
+        updateCalendarAndMap(events);
+    } catch (error) {
+        console.error('Error fetching events from Pockethost:', error);
+        alert("Failed to load events. Please try again later.");
+    }
+}
+
+document.getElementById('event-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById('event-name').value;
+    const date = document.getElementById('event-date').value;
+    const coordsInput = document.getElementById('event-coords').value;
+
+    const coords = coordsInput.split(',').map(Number);
+    if (coords.length !== 2 || isNaN(coords[0]) || isNaN(coords[1])) {
+        alert("Please enter valid coordinates (e.g., 46.2044, 6.1432).");
+        return;
+    }
+
+    const newEvent = { name, date, coords: coordsInput, description: "No description provided." };
+
+    try {
+        await pb.collection('events').create(newEvent); // Save to Pockethost
+        alert("Event added successfully!");
+        fetchEvents(); // Refresh events
+        this.reset();
+    } catch (error) {
+        console.error('Error saving event to Pockethost:', error);
+        alert("Failed to add event. Please try again.");
+    }
+});
 
 
 // Render events on the map
@@ -107,6 +149,8 @@ document.getElementById('date-picker').addEventListener('change', function () {
     renderCalendar(filteredEvents);
     displayEvents(filteredEvents);
 });
+
+const pb = new PocketBase('https://tangoportal.pockethost.io/'); // Replace with your Pockethost URL
 
 // Initial render
 fetchEvents();
