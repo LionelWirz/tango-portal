@@ -19,6 +19,16 @@ async function fetchEvents() {
     }
 }
 
+// Fetch events from PocketBase
+import PocketBase from 'pocketbase';
+
+const pb = new PocketBase('https://tangoportal.pockethost.io');
+
+const record = await pb.collection('events').getOne('RECORD_ID', {
+    expand: 'relField1,relField2.subRelField',
+});
+
+
 // Render events on the map
 function displayEventsOnMap(events) {
     map.eachLayer(layer => {
