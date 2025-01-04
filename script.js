@@ -1,3 +1,4 @@
+// Initialize PocketBase client
 const pb = new PocketBase('https://tangoportal.pockethost.io/');
 
 // Initialize the map
@@ -7,34 +8,27 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Fetch events from PocketBase
+// Fetch events from PocketBase and initialize rendering
 async function fetchEvents() {
     try {
-        const events = await pb.collection('events').getFullList();
-        renderCalendar(events);
-        displayEventsOnMap(events);
+        const events = await pb.collection('events').getFullList(); // Fetch all events
+        renderCalendar(events); // Populate calendar
+        displayEventsOnMap(events); // Display markers on the map
+        return events; // Return events for potential filtering
     } catch (error) {
         console.error('Error fetching events:', error);
         alert("Failed to load events. Please try again later.");
     }
 }
 
-// Fetch events from PocketBase
-import PocketBase from 'pocketbase';
-
-const pb = new PocketBase('https://tangoportal.pockethost.io');
-
-const record = await pb.collection('events').getOne('RECORD_ID', {
-    expand: 'relField1,relField2.subRelField',
-});
-
-
 // Render events on the map
 function displayEventsOnMap(events) {
+    // Clear existing markers
     map.eachLayer(layer => {
         if (layer instanceof L.Marker) map.removeLayer(layer);
     });
 
+    // Add markers for each event
     events.forEach(event => {
         const coords = event.coords.split(',').map(Number);
         L.marker(coords)
@@ -56,7 +50,7 @@ function renderCalendar(events) {
             Date: ${event.date}<br>
             Description: ${event.description}
         `;
-        entry.onclick = () => showEventDetails(event);
+        entry.onclick = () => showEventDetails(event); // Add click handler
         calendar.appendChild(entry);
     });
 }
@@ -85,21 +79,24 @@ function goBack() {
 document.getElementById('event-form').addEventListener('submit', async function (e) {
     e.preventDefault();
 
+    // Get form data
     const name = document.getElementById('event-name').value.trim();
     const date = document.getElementById('event-date').value.trim();
     const coords = document.getElementById('event-coords').value.trim();
     const description = document.getElementById('event-description').value.trim();
 
+    // Validate input
     if (!name || !date || !coords) {
         alert("Please fill out all required fields.");
         return;
     }
 
     try {
+        // Create a new event in PocketBase
         await pb.collection('events').create({ name, date, coords, description });
         alert("Event added successfully!");
-        fetchEvents();
-        this.reset();
+        fetchEvents(); // Refresh events
+        this.reset(); // Reset form
     } catch (error) {
         console.error('Error saving event:', error);
         alert("Failed to add event. Please try again.");
@@ -107,18 +104,22 @@ document.getElementById('event-form').addEventListener('submit', async function 
 });
 
 // Filter events by date
-document.getElementById('date-picker').addEventListener('change', function () {
+document.getElementById('date-picker').addEventListener('change', async function () {
     const selectedDate = this.value;
-    fetchEvents().then(events => {
-        const filteredEvents = events.filter(event => event.date === selectedDate);
-        if (filteredEvents.length === 0) alert("No events found for the selected date.");
-        renderCalendar(filteredEvents);
-        displayEventsOnMap(filteredEvents);
-    });
+    const events = await fetchEvents(); // Get all events
+    const filteredEvents = events.filter(event => event.date === selectedDate);
+
+    if (filteredEvents.length === 0) {
+        alert("No events found for the selected date.");
+    } else {
+        renderCalendar(filteredEvents); // Render filtered events in calendar
+        displayEventsOnMap(filteredEvents); // Display filtered events on map
+    }
 });
 
 // Initial render
 fetchEvents();
+
 
 
 
