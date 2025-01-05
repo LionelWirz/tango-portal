@@ -36,56 +36,6 @@ function renderCalendar(events) {
         calendar.appendChild(entry);
     });
 }
-
-
-// Show event details
-function showEventDetails(event) {
-    const details = document.getElementById('details');
-    details.innerHTML = `
-        <h2>${event.name}</h2>
-        <p><strong>Date:</strong> ${event.date}</p>
-        <p><strong>Coordinates:</strong> ${event.coords}</p>
-        <p><strong>Description:</strong> ${event.description}</p>
-        <button onclick="goBack()">Back</button>
-    `;
-    document.getElementById('calendar').style.display = 'none';
-    details.style.display = 'block';
-}
-
-// Back button functionality
-function goBack() {
-    document.getElementById('details').style.display = 'none';
-    document.getElementById('calendar').style.display = 'block';
-}
-
-// Submit new event
-document.getElementById('event-form').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    // Get form data
-    const name = document.getElementById('event-name').value.trim();
-    const date = document.getElementById('event-date').value.trim();
-    const coords = document.getElementById('event-coords').value.trim();
-    const description = document.getElementById('event-description').value.trim();
-
-    // Validate input
-    if (!name || !date || !coords) {
-        alert("Please fill out all required fields.");
-        return;
-    }
-
-    try {
-        // Create a new event in PocketBase
-        await pb.collection('events').create({ name, date, coords, description });
-        alert("Event added successfully!");
-        fetchEvents(); // Refresh events
-        this.reset(); // Reset form
-    } catch (error) {
-        console.error('Error saving event:', error);
-        alert("Failed to add event. Please try again.");
-    }
-});
-
 // Filter events by date
 document.getElementById('date-picker').addEventListener('change', async function () {
     const selectedDate = this.value;
