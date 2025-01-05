@@ -5,17 +5,23 @@ const pb = new PocketBase('https://tangoportal.pockethost.io/');
 
 // Fetch events from PocketBase and initialize rendering
 async function fetchEvents() {
+    const calendar = document.getElementById('calendar');
+    calendar.innerHTML = '<p>Loading events...</p>'; // Temporary loading message
+
     try {
         const records = await pb.collection('events').getFullList({
             sort: '-someField',
         });
-        renderCalendar(events); // Populate calendar
-        return events; // Return events for potential filtering
+        renderCalendar(records);
+        displayEventsOnMap(records);
+        return records;
     } catch (error) {
         console.error('Error fetching events:', error);
         alert("Failed to load events. Please try again later.");
     }
 }
+
+
 
 
 // Render events in the calendar
