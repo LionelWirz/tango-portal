@@ -3,25 +3,10 @@ import PocketBase from 'pocketbase';
 // Initialize PocketBase client
 const pb = new PocketBase('https://tangoportal.pockethost.io/');
 
-
-
-// Fetch events from PocketBase and initialize rendering
-async function fetchEvents() {
-    const calendar = document.getElementById('calendar');
-    calendar.innerHTML = '<p>Loading events...</p>'; // Temporary loading message
-
-    try {
-        const records = await pb.collection('events').getFullList({
-            sort: '-someField',
-        });
-        renderCalendar(records);
-        displayEventsOnMap(records);
-        return records;
-    } catch (error) {
-        console.error('Error fetching events:', error);
-        alert("Failed to load events. Please try again later.");
-    }
-}
+// you can also fetch all records at once via getFullList
+const records = await pb.collection('events').getFullList({
+    sort: '-someField',
+});
 
 
 
