@@ -8,9 +8,6 @@ const records = await pb.collection('events').getFullList({
     sort: '-someField',
 });
 
-
-
-
 // Render events in the calendar
 function renderCalendar(events) {
     const calendar = document.getElementById('calendar');
