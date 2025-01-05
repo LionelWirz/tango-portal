@@ -18,21 +18,6 @@ async function fetchEvents() {
     }
 }
 
-// Render events on the map
-function displayEventsOnMap(events) {
-    // Clear existing markers
-    map.eachLayer(layer => {
-        if (layer instanceof L.Marker) map.removeLayer(layer);
-    });
-
-    // Add markers for each event
-    events.forEach(event => {
-        const coords = event.coords.split(',').map(Number);
-        L.marker(coords)
-            .addTo(map)
-            .bindPopup(`<b>${event.name}</b><br>Date: ${event.date}`);
-    });
-}
 
 // Render events in the calendar
 function renderCalendar(events) {
