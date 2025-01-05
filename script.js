@@ -10,7 +10,6 @@ async function fetchEvents() {
             sort: '-someField',
         });
         renderCalendar(events); // Populate calendar
-        displayEventsOnMap(events); // Display markers on the map
         return events; // Return events for potential filtering
     } catch (error) {
         console.error('Error fetching events:', error);
@@ -46,7 +45,6 @@ document.getElementById('date-picker').addEventListener('change', async function
         alert("No events found for the selected date.");
     } else {
         renderCalendar(filteredEvents); // Render filtered events in calendar
-        displayEventsOnMap(filteredEvents); // Display filtered events on map
     }
 });
 
