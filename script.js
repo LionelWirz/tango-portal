@@ -55,6 +55,7 @@ function renderCalendar(events) {
     });
 }
 
+
 // Show event details
 function showEventDetails(event) {
     const details = document.getElementById('details');
