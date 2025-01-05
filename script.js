@@ -1,3 +1,5 @@
+import PocketBase from 'pocketbase';
+
 // Initialize PocketBase client
 const pb = new PocketBase('https://tangoportal.pockethost.io/');
 
