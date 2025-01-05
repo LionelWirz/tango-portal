@@ -1,12 +1,7 @@
 // Initialize PocketBase client
 const pb = new PocketBase('https://tangoportal.pockethost.io/');
 
-// Initialize the map
-const map = L.map('map').setView([46.8182, 8.2275], 7);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: '© OpenStreetMap contributors'
-}).addTo(map);
+
 
 // Fetch events from PocketBase and initialize rendering
 async function fetchEvents() {
