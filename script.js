@@ -11,7 +11,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Fetch events from PocketBase and initialize rendering
 async function fetchEvents() {
     try {
-        const events = await pb.collection('events').getFullList(); // Fetch all events
+        const records = await pb.collection('events').getFullList({
+            sort: '-someField',
+        });
         renderCalendar(events); // Populate calendar
         displayEventsOnMap(events); // Display markers on the map
         return events; // Return events for potential filtering
