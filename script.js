@@ -3,14 +3,13 @@ import PocketBase from 'pocketbase';
 // Initialize PocketBase client
 const pb = new PocketBase('https://tangoportal.pockethost.io/');
 
-// Fetch events and initialize rendering
+// Fetch events and render them
 async function fetchEvents() {
     try {
         const records = await pb.collection('events').getFullList({
-            sort: '-someField',
+            sort: 'date',
         });
-        renderCalendar(records); // Render events
-        return records; // Return the fetched events
+        renderCalendar(records);
     } catch (error) {
         console.error('Error fetching events:', error);
         alert('Failed to load events. Please try again later.');
@@ -20,7 +19,12 @@ async function fetchEvents() {
 // Render events in the calendar
 function renderCalendar(events) {
     const calendar = document.getElementById('calendar');
-    calendar.innerHTML = ''; // Clear existing events
+    calendar.innerHTML = '';
+
+    if (events.length === 0) {
+        calendar.innerHTML = '<p>No events found.</p>';
+        return;
+    }
 
     events.forEach(event => {
         const entry = document.createElement('div');
@@ -30,12 +34,12 @@ function renderCalendar(events) {
             Date: ${event.date}<br>
             Description: ${event.description}
         `;
-        entry.onclick = () => showEventDetails(event); // Add click handler
+        entry.onclick = () => showEventDetails(event);
         calendar.appendChild(entry);
     });
 }
 
-// Show event details (Optional function)
+// Show event details in a popup or separate section
 function showEventDetails(event) {
     const details = document.getElementById('details');
     details.style.display = 'block';
@@ -47,7 +51,7 @@ function showEventDetails(event) {
     `;
 }
 
-// Hide details (Optional function)
+// Hide event details
 function hideDetails() {
     const details = document.getElementById('details');
     details.style.display = 'none';
@@ -56,21 +60,22 @@ function hideDetails() {
 // Filter events by date
 document.getElementById('date-picker').addEventListener('change', async function () {
     const selectedDate = this.value;
-    const events = await fetchEvents(); // Fetch all events
-    const filteredEvents = events.filter(event => {
-        const eventDate = new Date(event.date).toISOString().split('T')[0];
-        return eventDate === selectedDate;
-    });
+    try {
+        const events = await pb.collection('events').getFullList({
+            filter: `date = "${selectedDate}"`,
+        });
 
-    if (filteredEvents.length === 0) {
-        alert('No events found for the selected date.');
-    } else {
-        renderCalendar(filteredEvents); // Render filtered events
+        if (events.length === 0) {
+            alert('No events found for the selected date.');
+        } else {
+            renderCalendar(events);
+        }
+    } catch (error) {
+        console.error('Error filtering events:', error);
     }
 });
 
-// Initial render
+// Initialize app
 (async function initialize() {
-    const records = await fetchEvents();
-    renderCalendar(records); // Render the initial events
+    await fetchEvents();
 })();
