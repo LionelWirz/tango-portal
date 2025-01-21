@@ -1,7 +1,7 @@
 import PocketBase from 'pocketbase';
 
 // Initialize PocketBase client
-const pb = new PocketBase('https://tangoportal.pockethost.io/');
+const pb = new PocketBase('https://tango-test.pockethost.io/');
 
 // Fetch events and render them
 async function fetchEvents() {
